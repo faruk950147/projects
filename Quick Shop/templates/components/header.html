@@ -1,0 +1,184 @@
+{% load static %}
+<header class="header header-22">
+    <div class="header-middle">
+        <div class="container">
+            <div class="header-left">
+                <button class="mobile-menu-toggler">
+                    <span class="sr-only">Toggle mobile menu</span>
+                    <i class="icon-bars"></i>
+                </button>
+
+                <a href="{% url "home" %}" class="logo">
+                    <img src="{% static 'assets/images/demos/demo-22/logo.png' %}" alt="Molla Logo" width="130" height="30">
+                </a>
+            </div><!-- End .header-left -->
+
+            <div class="header-center">
+                <div class="header-search header-search-extended header-search-visible header-search-no-round">
+                    <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
+                    <form action="#" method="get">
+                        <div class="header-search-wrapper search-wrapper-wide">
+                            <label for="q" class="sr-only">Search</label>
+                            <input type="search" class="form-control" name="q" id="q" placeholder="Search product ..." required>
+
+                            <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+                        </div><!-- End .header-search-wrapper -->
+                    </form>
+                </div><!-- End .header-search -->
+            </div>
+
+            <div class="header-right">
+                <div class="dropdown compare-dropdown">
+                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Compare Products" aria-label="Compare Products">
+                        <i class="icon-user"></i>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <ul class="compare-products">
+                            {% if request.user.is_authenticated %}
+                                <li class="compare-product">
+                                    <li class="compare-product">
+                                        <h4 class="compare-product-title">
+                                            <a href="">Wellcome {{request.user.username}}</a>
+                                        </h4>
+                                        <hr>
+                                        <h4 class="compare-product-title"><a href="{% url "logout" %}">Logout</a></h4>
+                                        <h4 class="compare-product-title"><a href="{% url "change_password" %}">Changes Password</a></h4>
+                                    </li>
+
+                            {% else %}
+                                </li>
+                                <li class="compare-product">
+                                    <h4 class="compare-product-title"><a href="{% url "register" %}">Register</a></h4>
+                                    <h4 class="compare-product-title"><a href="{% url "login" %}">Login</a></h4>
+                                </li>
+                            {% endif %}
+                        </ul>
+
+                    </div><!-- End .dropdown-menu -->
+                </div>
+                <a href="wishlist.html" class="wishlist-link">
+                    <i class="icon-heart-o"></i>
+                    <span class="wishlist-count">3</span>
+                </a>
+
+                <div class="dropdown cart-dropdown">
+                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                        <i class="icon-shopping-cart"></i>
+                        {% if request.user.is_authenticated %}
+                        <span class="cart-count">{{carts_conuts}}</span>
+                        {% else %}
+                        <span class="cart-count">0</span>
+                        {% endif %}
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-cart-products">
+
+                            {% for cart in carts %}
+                            <div class="product">
+                                <div class="product-cart-details">
+                                    <h4 class="product-title">
+                                        <a href="{% url "product_details" cart.item.slug cart.item.id %}">{{cart.item.title|truncatewords:5}}</a>
+                                    </h4>
+
+                                    <span class="cart-product-info">
+                                        <span class="cart-product-qty">{{cart.quantity}}</span>
+                                        x $ {{cart.total_price}}
+                                        <span class="cart-product-color-size">x {{cart.color_varinat}} x {{cart.size_variant}}</span>
+                                    </span>
+                                </div><!-- End .product-cart-details -->
+
+                                <figure class="product-image-container">
+                                    <a href="{% url "product_details" cart.item.slug cart.item.id %}" class="product-image">
+                                        <img src="{{cart.item.products_images.first.gallery.url}}" alt="{{cart.item.title}}">
+                                    </a>
+                                </figure>
+                                <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                            </div><!-- End .product -->
+                            {% endfor %}
+                        </div><!-- End .cart-product -->
+
+                        <div class="dropdown-cart-total">
+                            <span>Total</span>
+
+                            <span class="cart-total-price">$160.00</span>
+                        </div><!-- End .dropdown-cart-total -->
+
+                        <div class="dropdown-cart-action">
+                            <a href="cart.html" class="btn btn-primary">View Cart</a>
+                            <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                        </div><!-- End .dropdown-cart-total -->
+                    </div><!-- End .dropdown-menu -->
+                </div><!-- End .cart-dropdown -->
+            </div><!-- End .header-right -->
+        </div><!-- End .container -->
+    </div><!-- End .header-middle -->
+
+    <div class="wrap-container sticky-header">
+        <div class="header-bottom">
+            <div class="container">
+                <div class="header-left">
+                    <div class="dropdown category-dropdown" data-visible="true">
+                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-display="static" title="Browse Categories">
+                            Browse Categories
+                        </a>
+                        <div class="dropdown-menu">
+                            <nav class="side-nav">
+                                <ul class="menu-vertical sf-arrows text-center">
+                                    {% if request.user.is_authenticated %}
+                                        {% for category in categories %}
+                                            {% if not category.children.all %}
+                                                <li class="item-lead"><a href="">{{category.title|title}}</a></li>
+                                            {% else %}
+                                                <li class="item-lead"><a href="#">{{category.title|title}}</a>
+                                                    <ul class="menu-vertical sf-arrows text-center p-0">
+                                                        {% for subcategory in category.children.all %}
+                                                        <li class="item-lead"><a href="">{{subcategory.title|title}}</a>
+                                                            <ul class="menu-vertical sf-arrows text-center p-0">
+                                                                {% for extrasubcategory in subcategory.children.all %}
+                                                                <li class="item-lead"><a href="">{{extrasubcategory.title|title}}</a>
+                                                                {% endfor %}
+                                                            </ul>   
+                                                        </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <li class="item-lead"><a href="">You are not authenticated</a></li>
+                                    {% endif %}
+                                </ul><!-- End .menu-vertical -->
+                            </nav><!-- End .side-nav -->
+                        </div><!-- End .dropdown-menu -->
+                    </div>
+                </div>
+                
+                <div class="header-center">
+                    <nav class="main-nav">
+                        <ul class="menu">
+                            <li class="item {% if request.resolver_match.url_name == 'home' %} active {% endif %}"><a href="{% url 'home' %}" class="">Home</a></li>
+                            <li class="item {% if request.resolver_match.url_name == 'product_list' %} active {% endif %}"><a href="{% url "product_list" %}" class="">Products</a> </li>
+                            <li class="item"><a href="#" class="">Pages</a>
+                                <ul>
+                                    <li><a href="login.html">Login</a></li>
+                                    <li><a href="about.html" class="">About</a>
+                                        <ul>
+                                            <li><a href="about.html">About 01</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul><!-- End .menu -->
+                    </nav><!-- End .main-nav -->
+                </div><!-- End .header-left -->
+
+                <div class="header-right">
+                    <i class="la la-lightbulb-o"></i><p>Clearance<span class="highlight">&nbsp;Up to 30% Off</span></p>
+                </div>
+            </div><!-- End .container -->
+        </div><!-- End .header-bottom -->
+    </div><!-- End .wrap-container -->
+</header><!-- End .header -->
+

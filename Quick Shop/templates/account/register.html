@@ -1,0 +1,75 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}Register{% endblock title %} 
+{% block main %}
+<section class="section-conten padding-y" style="min-height: 84vh">
+  <!-- ============================ COMPONENT Register   ================================= -->
+  <div class="card mx-auto" style="max-width: 380px; margin-top: 50px">
+    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+      <h4 class="card-title mb-4 text-muted">Register Here</h4>
+      <div class="form-group">
+        {% include 'components/alert.html' %}
+      </div>
+      <form method="POST" novalidate>
+        {% csrf_token %}
+        <!-- form-group// -->
+        <div class="form-group input-group input-group-md">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-user"></i></span>
+          </div>
+          <div class="input-group-append input-group-md">
+            {{form.username}}
+            {% comment %} <input name="username" class="form-control" placeholder="Username" type="text"/> {% endcomment %}
+          </div>
+          {{form.username.errors}}
+        </div>
+        <!-- form-group// -->
+        <div class="form-group input-group input-group-md">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+          </div>
+          <div class="input-group-append">
+            {{form.email}}
+            {% comment %} <input name="email" class="form-control" placeholder="Email" type="email"/> {% endcomment %}
+          </div>
+          {{form.email.errors}}
+        </div>
+        <!-- form-group// -->
+        <div class="form-group input-group input-group-md">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+          </div>
+          <div class="input-group-append">
+            {{form.password}}
+            {% comment %} <input name="password" class="form-control" placeholder="Password" type="password"/> {% endcomment %}
+          </div>
+          {{form.password.errors}}
+        </div>
+        <!-- form-group// -->
+        <div class="form-group input-group input-group-md">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+          </div>
+          <div class="input-group-append">
+            {{form.password1}}
+            {% comment %} <input name="password1" class="form-control" placeholder="Confirm Password" type="password"/> {% endcomment %}
+          </div>
+          {{form.password1.errors}}
+        </div>
+        <!-- form-group// -->
+        <div class="form-group">
+          <a href="{% url "password_reset" %}" class="float-left text-dark ml-2">Forgot password</a>
+          <a href="{% url "login" %}" class="float-right text-dark mr-2">Sign in ?</a>
+        </div>
+        <!-- form-group form-check .// -->
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block">Register Here</button>
+        </div>
+        <!-- form-group// -->
+      </form>
+    </div>
+    <!-- card-body.// -->
+  </div>
+  <!-- ============================ COMPONENT LOGIN  END.// ================================= -->
+</section>
+{% endblock main %}

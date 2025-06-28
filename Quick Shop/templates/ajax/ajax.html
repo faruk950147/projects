@@ -1,0 +1,51 @@
+{% load static %}
+{% for product in products %}
+<div class="col-sm-6 col-md-4 col-lg-4 product-box">
+    <div class="product product-7 text-center">
+        <figure class="product-media">
+            <span class="product-label label-circle label-top">Top</span>
+            <span class="product-label label-circle label-sale">Sale</span>
+            <a href="{% url "product_details" product.slug product.id %}">
+                {% if product.products_images.first.gallery %}
+                <img style"width: 100%; height: 100%;" src="{{product.products_images.first.gallery.url}}" alt="{{product.title|title}}" class="product-image">
+                {% else %}
+                <img style"width: 100%; height: 100%;" src="{% static 'assets/img/370x300.png' %}" alt="{{product.title|title}}">
+                {% endif %}
+            </a>
+
+            <div class="product-action-vertical">
+                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
+            </div><!-- End .product-action -->
+
+            <div class="product-action">
+                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+            </div><!-- End .product-action -->
+        </figure><!-- End .product-media -->
+
+        <div class="product-body">
+            <div class="product-cat">
+                <a href="#">{{product.category.title|title}}</a>
+            </div><!-- End .product-cat -->
+            <h3 class="product-title"><a href="{% url "product_details" product.slug product.id %}">{{product.title|title}}</a></h3><!-- End .product-title -->
+            <div class="product-price">
+                <span class="new-price">$ {{product.price|title}}</span>
+                {% if product.old_price %}
+                <span class="old-price">Was $ {{product.old_price|title}}</span>
+                {% endif %}
+            </div><!-- End .product-price -->
+            <div class="ratings-container">
+                <div class="ratings">
+                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
+                </div><!-- End .ratings -->
+                <span class="ratings-text">( 10 Reviews )</span>
+            </div><!-- End .rating-container -->
+
+            <div class="product-nav product-nav-dots">
+                <a href="#" class="active" style="background: #edd2c8;"><span class="sr-only">Color name</span></a>
+                <a href="#" style="background: #eaeaec;"><span class="sr-only">Color name</span></a>
+                <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
+            </div><!-- End .product-nav -->
+        </div><!-- End .product-body -->
+    </div><!-- End .product -->
+</div><!-- End .col-sm-6 col-lg-4 -->
+{% endfor %}

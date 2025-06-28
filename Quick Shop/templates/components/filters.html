@@ -1,0 +1,81 @@
+{% load static %}
+<div class="sidebar sidebar-shop">
+    <div class="widget widget-clean">
+        <label>Filters:</label>
+    </div><!-- End .widget widget-clean -->
+
+    <div class="widget widget-collapsible">
+        <h3 class="widget-title">
+            <a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="true" aria-controls="widget-1">
+                Price
+            </a>
+        </h3><!-- End .widget-title -->
+
+        <div class="collapse show" id="widget-1">
+            <div class="widget-body">
+                <div class="filter-items filter-items-count">
+                    <div class="filter-item">
+                        <li class="list-group-item">
+                            <input type="range" value="{{maxPrice.price__max}}" min="{{minPrice.price__min}}" max="{{maxPrice.price__max}}" oninput="maxPrice.value=this.value" id="rangeInput" style="width: 100%;">
+                            <span style="color: #666;">{{minPrice.price__min}} - {{maxPrice.price__max}} </span>
+                        </li>
+                        <li class="list-group-item">
+                            <span style="background-color: #52b3db; color: #fff; padding: 2px;">Min</span> : <input type="text" value="{{maxPrice.price__max}}" min="{{minPrice.price__min}}" max="{{maxPrice.price__max}}" onkeyup="rangeInput.value=this.value" id="maxPrice" style="width: 55%; background-color: #fff; color: #666; padding: 2px; border: none;"> : <button id="priceFilterBtn" style="background-color: #52b3db; color: #fff; border: none;" >Filter</button>
+                        </li>
+                    </div><!-- End .filter-item -->
+                </div><!-- End .filter-items -->
+            </div><!-- End .widget-body -->
+        </div><!-- End .collapse -->
+    </div><!-- End .widget -->
+
+    <div class="widget widget-collapsible">
+        <h3 class="widget-title">
+            <a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="true" aria-controls="widget-2">
+                Categories
+            </a>
+        </h3><!-- End .widget-title -->
+
+        <div class="collapse show" id="widget-2">
+            <div class="widget-body">
+                <div class="filter-items filter-items-count">
+                    {% if cats.count > 0 %}
+                    {% for cat in cats %}
+                    <div class="filter-item">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" data-filter="category" id="{{cat.id}}" value="{{cat.id}}" class="filter-checkbox">
+                            <label for="{{cat.id}}"> {{cat.title|title}} <span class="item-count">( {{cat.cat_products.count}} )</span> </label>
+                        </div><!-- End .custom-checkbox -->
+                    </div><!-- End .filter-item -->
+                    {% endfor %}
+                    {% endif %}
+                </div><!-- End .filter-items -->
+            </div><!-- End .widget-body -->
+        </div><!-- End .collapse -->
+    </div><!-- End .widget -->
+
+    <div class="widget widget-collapsible">
+        <h3 class="widget-title">
+            <a data-toggle="collapse" href="#widget-2" role="button" aria-expanded="true" aria-controls="widget-3">
+                Brands
+            </a>
+        </h3><!-- End .widget-title -->
+
+        <div class="collapse show" id="widget-3">
+            <div class="widget-body">
+                <div class="filter-items filter-items-count">
+                    {% if brands.count > 0 %}
+                    {% for brand in brands %}
+                    <div class="filter-item">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" data-filter="brand" id="{{brand.id}}" value="{{brand.id}}" class="filter-checkbox">
+                            <label for="{{brand.id}}"> {{brand.title|title}} <span class="item-count">( {{brand.bra_products.count}} )</span> </label>
+                        </div><!-- End .custom-checkbox -->
+                    </div><!-- End .filter-item -->
+                    {% endfor %}
+                    {% endif %}
+                </div><!-- End .filter-items -->
+            </div><!-- End .widget-body -->
+        </div><!-- End .collapse -->
+    </div><!-- End .widget -->
+
+</div><!-- End .sidebar sidebar-shop -->

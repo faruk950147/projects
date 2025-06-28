@@ -1,0 +1,22 @@
+{% load static %}
+{% if object_list.has_previous %}
+<li class="page-item">
+    <a class="page-link page-link-prev" href="?page={{object_list.previous_page_number}}" aria-label="Previous">
+        <span aria-hidden="true"><i class="icon-long-arrow-left"></i>Previous</span>
+    </a>
+</li> 
+{% endif %}
+
+{% for page in paginator.page_range %}
+{% if object_list.number > page|add:'-5' and object_list.number < page|add:'+5' %}
+<li class="page-item {% if page == object_list.number %}active{% endif %} " aria-current="page"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+{% endif %}
+{% endfor %}
+
+{% if object_list.has_next %}
+<li class="page-item">
+    <a class="page-link page-link-next" href="?page={{object_list.next_page_number}}" aria-label="Next">
+        Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+    </a>
+</li> 
+{% endif %}

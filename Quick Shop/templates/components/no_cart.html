@@ -1,0 +1,12 @@
+{% load static %}
+<div class="row justify-content-center align-items-center">
+    <div class="col-md-5">
+        <img class="img-fluid" style="width:450px" src="{% static 'img/no_cart.png' %}" alt="no result" srcset="">
+        <div class="p-status">
+            <h3 class="text-center text-danger py-2">Your Cart  Is Empty</h3>
+        </div>
+        <div class="d-grid gap-2 py-5 text-center">
+            <a class="btn btn-outline-dark text-decoration-none" href="{% url 'product_list_views' %}">Go To Shopping Here</a>
+        </div>
+    </div>
+</div>
