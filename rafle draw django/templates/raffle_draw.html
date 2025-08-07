@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Raffle Draw</title>
+</head>
+<body>
+    <h1>🎟️ Raffle Draw</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">🎯 Draw Winner</button>
+    </form>
+
+    {% if winner %}
+        <h2>🏆 Winner: {{ winner.name }}</h2>
+    {% endif %}
+
+    <h3>All Participants:</h3>
+    <ul>
+        {% for participant in participants %}
+            <li>{{ participant.name }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
